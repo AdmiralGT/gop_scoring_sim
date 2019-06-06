@@ -1,0 +1,33 @@
+scores:
+  alliance:
+    - 5
+    - 1
+  normal:
+    - 8
+    - 7
+    - 6
+    - 5
+    - 4
+    - 3
+    - 2
+    - 1
+teams:
+    - strength: 1
+      alliance: A
+    - strength: 1
+      alliance: A
+    - strength: 1
+      alliance: A
+    - strength: 1
+      alliance: A
+    - strength: 1
+      alliance: B
+    - strength: 1
+      alliance: B
+    - strength: 1
+      alliance: B
+    - strength: 1
+      alliance: B
+events:
+  alliance: 5
+  normal: 10
