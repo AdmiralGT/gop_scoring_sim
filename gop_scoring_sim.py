@@ -2,7 +2,7 @@ import argparse
 import yaml
 import logging
 from schematics.models import Model
-from schematics.types import StringType, IntType, DictType
+from schematics.types import StringType, IntType
 from schematics.exceptions import ValidationError
 
 __author__ = 'AdmiralGT'
@@ -12,19 +12,27 @@ logger.setLevel(logging.INFO)
 
 class Sim(object):
 
-    def __init__(self):
+    def __init__(self, config):
         self.teams = []
-        self.events = []
+        for team in config['teams']:
+            self.teams.append(team)
+        self.alliance_events = config['events']['alliance']
+        self.normal_events = config['events']['normal']
 
     def addTeam(self, team):
         self.teams.append(team)
 
-    def _score_event(self):
+    def _score_alliance_event(self):
+        pass
+
+    def _score_normal_events(self):
         pass
 
     def runSim(self, iterations):
-        for event in self.events:
-            self._score_event()
+        for event in self.alliance_events:
+            self._score_alliance_event()
+        for event in self.normal_events:
+            self._score_normal_event()
 
 
 def parse_arguments():
@@ -32,7 +40,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="Calculate Doomtown Hand ranks.")
     parser.add_argument('config',
                         type=config_file_format,
-                        # type=test_type,
                         help='The config file containing the teams, scores and events')
     parser.add_argument('--iterations', type=int, choices=range(max_iterations), action='store',
                         metavar='[0-{}]'.format(max_iterations), default=10,
@@ -62,21 +69,34 @@ def config_file_format(path):
             if type not in config:
                 raise argparse.ArgumentTypeError('Config does not contain any {}'.format(type))
 
-        for team in config['teams']:
+        teams = config['teams']
+        alliances = set()
+        for team in teams:
             t = Team(team)
             try:
                 t.validate()
+                alliances.add(t.alliance)
             except ValidationError as e:
                 raise argparse.ArgumentTypeError('Invalid config format: {}'.format(e.messages))
 
         validate_config(config['events'], 'events')
         validate_config(config['scores'], 'scores')
 
+        if len(teams) != len(config['scores']['normal']):
+            raise argparse.ArgumentTypeError('Must have same number of teams as number of scoring options in normal events, '
+                                             'have {} teams and {} score options'.format(teams, config['scores']['normal']))
+
+        if len(alliances) != len(config['scores']['alliance']):
+            raise argparse.ArgumentTypeError('Must have same number of alliances as number of scoring options in alliances events, '
+                                             'have {} alliances and {} score options'.format(alliances, config['scores']['alliance']))
+
+
         return config
 
 
 
 class Team(Model):
+    name = StringType(required=True)
     strength = IntType(required=True)
     alliance = StringType(required=True)
 
@@ -87,6 +107,6 @@ if __name__ == '__main__':
     if args.verbose:
         logger.setLevel(logging.DEBUG)
 
-    sim = Sim()
+    sim = Sim(args.config)
     sim.runSim(args.iterations)
 

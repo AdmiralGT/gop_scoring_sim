@@ -12,21 +12,29 @@ scores:
     - 2
     - 1
 teams:
-    - strength: 1
+    - name: A
+      strength: 1
       alliance: A
-    - strength: 1
+    - name: B
+      strength: 1
       alliance: A
-    - strength: 1
+    - name: C
+      strength: 1
       alliance: A
-    - strength: 1
+    - name: D
+      strength: 1
       alliance: A
-    - strength: 1
+    - name: E
+      strength: 1
       alliance: B
-    - strength: 1
+    - name: F
+      strength: 1
       alliance: B
-    - strength: 1
+    - name: G
+      strength: 1
       alliance: B
-    - strength: 1
+    - name: H
+      strength: 1
       alliance: B
 events:
   alliance: 5
