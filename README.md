@@ -2,6 +2,8 @@
 
 Scoring simulator for the Game of Phones event.
 
+Python 3 only, recommended to run in a virtualenv, install requirements using `pip install -r requirements.txt`
+
 Usage:
 
 ```
