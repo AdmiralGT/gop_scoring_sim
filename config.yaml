@@ -37,5 +37,5 @@ teams:
       strength: 1
       alliance: B
 events:
-  alliance: 5
-  normal: 10
+  alliance: 1
+  normal: 1
