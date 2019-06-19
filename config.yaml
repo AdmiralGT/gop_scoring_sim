@@ -14,28 +14,28 @@ scores:
 teams:
     - name: A
       strength: 1
-      alliance: A
+      alliance: AAA
     - name: B
       strength: 1
-      alliance: A
+      alliance: AAA
     - name: C
       strength: 1
-      alliance: A
+      alliance: AAA
     - name: D
       strength: 1
-      alliance: A
+      alliance: AAA
     - name: E
       strength: 1
-      alliance: B
+      alliance: BBB
     - name: F
       strength: 1
-      alliance: B
+      alliance: BBB
     - name: G
       strength: 1
-      alliance: B
+      alliance: BBB
     - name: H
       strength: 1
-      alliance: B
+      alliance: BBB
 events:
   alliance: 1
   normal: 1
