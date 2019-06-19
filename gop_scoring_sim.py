@@ -1,6 +1,7 @@
 import argparse
 import yaml
 import logging
+import numpy
 from schematics.models import Model
 from schematics.types import StringType, FloatType
 from schematics.exceptions import ValidationError
@@ -10,7 +11,7 @@ from Participant import Team, Alliance
 __author__ = 'AdmiralGT'
 
 logging.basicConfig()
-logger = logging.getLogger('gop_scorer')
+logger = logging.getLogger('gop_scoring_sim')
 logger.setLevel(logging.INFO)
 
 class Sim(object):
@@ -36,7 +37,7 @@ class Sim(object):
         # Add alliance events
         for ii in range(config['events']['alliance']):
             logger.info('Adding Alliance Event')
-            self.events.append(Event(self.alliances.values(), config['scores']['alliance']))
+            self.events.append(Event(list(self.alliances.values()), config['scores']['alliance']))
 
         # Add normal events
         for ii in range(config['events']['normal']):
@@ -111,9 +112,11 @@ class Sim(object):
         logger.info('=======================================')
         self.teams.sort(key=lambda x: x.name)
         for team in self.teams:
-            logger.info('Team {}, Average position {}, Average points {}'.format(team.name,
-                                                                                 team.total_positions / self.iterations,
-                                                                                 team.total_points / self.iterations))
+            logger.info('Team {}:'.format(team.name))
+            logger.info('Position - Average: {}, Standard Deviation: {}'.format(numpy.mean(team.total_positions),
+                                                                                numpy.std(team.total_positions)))
+            logger.info('Points - Average: {}, Standard Deviation: {}'.format(numpy.mean(team.total_points),
+                                                                              numpy.std(team.total_points)))
 
 
 def parse_arguments():

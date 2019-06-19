@@ -1,6 +1,6 @@
 import logging
 
-logger = logging.getLogger('gop_scorer')
+logger = logging.getLogger('gop_scoring_sim')
 
 class EventParticipant(object):
     """
@@ -31,8 +31,8 @@ class Team(EventParticipant):
         super(Team, self).__init__(name, strength)
         self.alliance = alliance
         self.points = 0
-        self.total_positions = 0
-        self.total_points = 0
+        self.total_positions = []
+        self.total_points = []
 
     def score_points(self, score):
         """
@@ -49,8 +49,8 @@ class Team(EventParticipant):
         :param position: The position the team finished in.
         """
         logger.debug('Team {} scored {} points in position {}'.format(self.name, self.points, position))
-        self.total_points += self.points
-        self.total_positions += position
+        self.total_points.append(self.points)
+        self.total_positions.append(position)
         self.points = 0
 
 class Alliance(EventParticipant):

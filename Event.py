@@ -1,7 +1,7 @@
 import random
 import logging
 
-logger = logging.getLogger('gop_scorer')
+logger = logging.getLogger('gop_scoring_sim')
 
 class Event(object):
     """
